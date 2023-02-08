@@ -9,6 +9,7 @@ class HomePage(unittest.TestCase):
         self.serv_obj = Service("C:\Drivers\chromedriver_win32\chromedriver.exe")
         self.driver = webdriver.Chrome(service=self.serv_obj)
         self.driver.get("https://zoro.to/")
+        
 
     def tearDown(self):
         self.driver.close()
