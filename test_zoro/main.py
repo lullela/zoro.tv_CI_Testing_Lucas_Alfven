@@ -13,9 +13,12 @@ class HomePage(unittest.TestCase):
         self.driver.get("https://zoro.to/")
 
     #Uppdatera allt igen
-    def test_search_zoro(self):
+    def test_title(self):
         mainPage = page.MainPage(self.driver)
-        # assert mainPage.is_title_matches()
+        assert mainPage.is_title_matches()
+    
+    def test_search_bluelock(self):
+        mainPage = page.MainPage(self.driver)
         mainPage.search_text_element = "Blue Lock"
         mainPage.click_search_button()
         search_result_page = page.SearchResultPage(self.driver)

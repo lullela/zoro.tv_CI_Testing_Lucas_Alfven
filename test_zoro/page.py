@@ -1,5 +1,6 @@
 from locator import *
 from element import BasePageElement
+from selenium.webdriver.common.keys import Keys
 
 class SearchTextElement(BasePageElement):
     locator = "keyword"
@@ -21,8 +22,8 @@ class MainPage(BasePage):
         element.click()
     
     def click_search_button(self):
-        element = self.driver.find_element(*MainPageLocators.SEARCH_BUTTON)
-        element.click()
+        element = self.driver.find_element(*MainPageLocators.INPUT_FIELD)
+        element.send_keys(Keys.ENTER)
 
 class SearchResultPage(BasePage):
 
