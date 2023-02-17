@@ -19,13 +19,23 @@ class MainPage(BasePage):
     
     def click_fullsite_button(self):
         element = self.driver.find_element(*MainPageLocators.FULLSITE_BUTTON)
-        element.click()
+        self.driver.execute_script("arguments[0].click();", element)
     
     def click_search_button(self):
         element = self.driver.find_element(*MainPageLocators.INPUT_FIELD)
         element.send_keys(Keys.ENTER)
 
+class HomePage(BasePage):
+
+    def is_url_matches(self):
+        return "https://zoro.to/home" in self.driver.current_url
+
+
 class SearchResultPage(BasePage):
 
     def is_results_found(self):
-        return "Blue Lock" in self.driver.page_source
+        self.driver.find_element(By.LINK_TEXT, "Blue Lock")
+    
+    def is_results_empty(self):
+        elements = self.driver.find_elements(By.CLASS_NAME, "film-poster-ahref")
+        return len(elements) < 1

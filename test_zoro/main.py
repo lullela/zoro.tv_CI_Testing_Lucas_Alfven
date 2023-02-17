@@ -12,7 +12,6 @@ class HomePage(unittest.TestCase):
         self.driver = webdriver.Chrome(service=self.serv_obj)
         self.driver.get("https://zoro.to/")
 
-    #Uppdatera allt igen
     def test_title(self):
         mainPage = page.MainPage(self.driver)
         assert mainPage.is_title_matches()
@@ -22,10 +21,23 @@ class HomePage(unittest.TestCase):
         mainPage.search_text_element = "Blue Lock"
         mainPage.click_search_button()
         search_result_page = page.SearchResultPage(self.driver)
-        assert search_result_page.is_results_found()
+        search_result_page.is_results_found()
+    
+    def test_search_no_results(self):
+        mainPage = page.MainPage(self.driver)
+        mainPage.search_text_element = "zaza"
+        mainPage.click_search_button()
+        search_result_page = page.SearchResultPage(self.driver)
+        self.assertTrue(search_result_page.is_results_empty())
+
+    def test_fullsite_home(self):
+        mainPage = page.MainPage(self.driver)
+        mainPage.click_fullsite_button()
+        homePage = page.HomePage(self.driver)
+        homePage.is_url_matches()
     
     def tearDown(self):
-        self.driver.close()
+        self.driver.quit()
 
 if __name__ == "__main__":
     unittest.main()
