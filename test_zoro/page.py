@@ -1,6 +1,8 @@
 from locator import *
 from element import BasePageElement
 from selenium.webdriver.common.keys import Keys
+from selenium.webdriver.support.ui import WebDriverWait
+from selenium.webdriver.support import expected_conditions as EC
 
 class SearchTextElement(BasePageElement):
     locator = "keyword"
@@ -48,7 +50,9 @@ class HomePage(BasePage):
         self.driver.execute_script("arguments[0].click();", element)
     
     def click_captcha_box(self):
-        element = self.driver.find_element(*HomePageLocators.CAPTCHA_BOX)
+        locator = HomePageLocators.CAPTCHA_BOX
+        wait = WebDriverWait(self.driver, 10)
+        element = wait.until(EC.element_to_be_clickable(locator))
         element.click()
     
     def is_correct_login(self):

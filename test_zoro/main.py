@@ -1,6 +1,8 @@
 from selenium import webdriver
 from selenium.webdriver.chrome.service import Service
 from selenium.webdriver.common.by import By
+from selenium.webdriver.support.ui import WebDriverWait
+from selenium.webdriver.support import expected_conditions as EC
 import unittest
 import page
 
@@ -54,25 +56,40 @@ class HomePage(unittest.TestCase):
     def setUpClass(cls):
         serv_obj = Service("C:\Drivers\chromedriver_win32\chromedriver.exe")
         cls.driver = webdriver.Chrome(service=serv_obj)
+        cls.driver.get("https://zoro.to/home")
         cls.driver.implicitly_wait(5)
+        homePage = page.HomePage(cls.driver)
+        homePage.click_login_button()
+        homePage.login_user_element = "lulle-99@hotmail.com"
+        homePage.login_password_element = "TestAutomation99"
+        #Captcha förhindrar automatisering, manuell start
+        input("CLICK THE CAPTCHA AND LOGIN THEN PRESS ENTER")
+        WebDriverWait(cls.driver, 10).until(EC.url_contains("https://zoro.to/home"))
+        cls.auth_cookie = cls.driver.get_cookie("auth")
+        if cls.auth_cookie:
+            cls.driver.add_cookie(cls.auth_cookie)
+            cls.driver.refresh()
         # cls.driver.maximize_window()
     
     def setUp(self):
         self.driver.get("https://zoro.to/home")
+        if hasattr(self, "auth_cookie") and self.auth_cookie is not None:
+            cookie_dict = {
+                'name': self.auth_cookie['name'],
+                'value': self.auth_cookie['value'],
+                'domain': self.auth_cookie['domain'],
+                'path': self.auth_cookie['path'],
+                'expiry': self.auth_cookie['expiry']
+            }
+            self.driver.add_cookie(cookie_dict)
 
-    #Captcha kan förhindra automatiseringen här
     def test_valid_login(self):
         homePage = page.HomePage(self.driver)
-        homePage.click_login_button()
-        homePage.login_user_element = "lulle-99@hotmail.com"
-        homePage.login_password_element = "TestAutomation99"
-        homePage.click_captcha_box()
-        homePage.click_second_login_button()
         homePage.is_correct_login()
-
-    def tearDown(self):
-        self.driver.delete_all_cookies()
     
+    def test_add_to_list(self):
+        pass
+   
     @classmethod
     def tearDownClass(cls):
         cls.driver.quit()
