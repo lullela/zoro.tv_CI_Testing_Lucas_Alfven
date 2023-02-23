@@ -5,11 +5,16 @@ import unittest
 import page
 
 
-class HomePage(unittest.TestCase):
+class StartPage(unittest.TestCase):
+
+    @classmethod
+    def setUpClass(cls):
+        serv_obj = Service("C:\Drivers\chromedriver_win32\chromedriver.exe")
+        cls.driver = webdriver.Chrome(service=serv_obj)
+        # cls.driver.implicitly_wait(5)
+        # cls.driver.maximize_window()
 
     def setUp(self):
-        self.serv_obj = Service("C:\Drivers\chromedriver_win32\chromedriver.exe")
-        self.driver = webdriver.Chrome(service=self.serv_obj)
         self.driver.get("https://zoro.to/")
 
     def test_title(self):
@@ -37,7 +42,40 @@ class HomePage(unittest.TestCase):
         homePage.is_url_matches()
     
     def tearDown(self):
-        self.driver.quit()
+        self.driver.delete_all_cookies()
+    
+    @classmethod
+    def tearDownClass(cls):
+        cls.driver.quit()
+    
+class HomePage(unittest.TestCase):
+
+    @classmethod
+    def setUpClass(cls):
+        serv_obj = Service("C:\Drivers\chromedriver_win32\chromedriver.exe")
+        cls.driver = webdriver.Chrome(service=serv_obj)
+        cls.driver.implicitly_wait(5)
+        # cls.driver.maximize_window()
+    
+    def setUp(self):
+        self.driver.get("https://zoro.to/home")
+
+    #Captcha kan förhindra automatiseringen här
+    def test_valid_login(self):
+        homePage = page.HomePage(self.driver)
+        homePage.click_login_button()
+        homePage.login_user_element = "lulle-99@hotmail.com"
+        homePage.login_password_element = "TestAutomation99"
+        homePage.click_captcha_box()
+        homePage.click_second_login_button()
+        homePage.is_correct_login()
+
+    def tearDown(self):
+        self.driver.delete_all_cookies()
+    
+    @classmethod
+    def tearDownClass(cls):
+        cls.driver.quit()
 
 if __name__ == "__main__":
     unittest.main()
