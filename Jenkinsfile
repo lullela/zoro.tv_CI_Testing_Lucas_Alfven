@@ -1,9 +1,10 @@
 pipeline {
-    agent { docker { image 'python:3.10.7-alpine' } }
+    agent { docker { image 'jenkins/jenkins:lts' } }
     stages {
         stage('build') {
             steps {
                 sh 'python --version'
+                echo 'Test Stage'
             }
         }
     }
