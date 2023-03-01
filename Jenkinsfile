@@ -8,7 +8,7 @@ pipeline {
         }
           stage('Clone') {
             steps {
-                git 'https://github.com/lullela/zoro.tv_CI_Testing_Lucas_Alfven'  // Clone your repository
+                git 'https://github.com/lullela/zoro.tv_CI_Testing_Lucas_Alfven.git'  // Clone your repository
             }
         }
 
