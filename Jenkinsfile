@@ -6,7 +6,13 @@ pipeline {
                 checkout([$class: 'GitSCM', branches: [[name: 'main']], doGenerateSubmoduleConfigurations: false, extensions: [], submoduleCfg: [], userRemoteConfigs: [[url: 'https://github.com/lullela/zoro.tv_CI_Testing_Lucas_Alfven.git']]])
             }
         }
-          stage('Clone') {
+        stage('Install dependencies') {
+            steps {
+                sh 'pip install -r requirements.txt'
+            }
+        }
+
+        stage('Clone') {
             steps {
                 git 'https://github.com/lullela/zoro.tv_CI_Testing_Lucas_Alfven.git'  // Clone your repository
             }
