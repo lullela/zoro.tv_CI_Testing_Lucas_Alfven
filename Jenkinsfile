@@ -1,15 +1,6 @@
-sudo apt-get update
-sudo apt-get install python-pip -y
-
 pipeline {
     agent any
     stages {
-        stage('Setup') {
-            steps {
-                sh 'pip install -r requirements.txt'  // Install dependencies
-            }
-        }
-
         stage('Clone') {
             steps {
                 git 'https://github.com/lullela/zoro.tv_CI_Testing_Lucas_Alfven'  // Clone your repository
