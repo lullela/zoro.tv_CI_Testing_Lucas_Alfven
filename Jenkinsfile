@@ -1,7 +1,12 @@
 pipeline {
     agent any
     stages {
-        stage('Clone') {
+        stage('Checkout') {
+            steps {
+                checkout([$class: 'GitSCM', branches: [[name: 'main']], doGenerateSubmoduleConfigurations: false, extensions: [], submoduleCfg: [], userRemoteConfigs: [[url: 'https://github.com/lullela/zoro.tv_CI_Testing_Lucas_Alfven.git']]])
+            }
+        }
+          stage('Clone') {
             steps {
                 git 'https://github.com/lullela/zoro.tv_CI_Testing_Lucas_Alfven'  // Clone your repository
             }
