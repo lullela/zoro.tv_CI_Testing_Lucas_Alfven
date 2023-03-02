@@ -49,12 +49,6 @@ class HomePage(BasePage):
         element = self.driver.find_element(*HomePageLocators.SECOND_LOGIN_BUTTON)
         self.driver.execute_script("arguments[0].click();", element)
     
-    def click_captcha_box(self):
-        locator = HomePageLocators.CAPTCHA_BOX
-        wait = WebDriverWait(self.driver, 10)
-        element = wait.until(EC.element_to_be_clickable(locator))
-        element.click()
-    
     def is_correct_login(self):
         self.driver.find_element(By.XPATH, '//*[@id="user-slot"]/div/div/div[1]/div/img')
 
