@@ -8,8 +8,8 @@ pipeline {
             }
         stage('Test') {
             steps {
-                dir('C:/Users/lulle/.jenkins/workspace'){ 
-                    bat 'python -m unittest'
+                dir('C:/Users/lulle/gitprojekt/zoro.tv_CI_Testing/test_zoro'){ 
+                    bat 'python -m unittest main.StartPage'
                 }
             }
         }
