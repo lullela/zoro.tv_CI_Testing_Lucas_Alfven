@@ -1,32 +1,21 @@
 pipeline {
     agent any
     stages {
-        stage('Checkout') {
+        stage('Check out repo'){
             steps {
-                checkout([$class: 'GitSCM', branches: [[name: 'main']], doGenerateSubmoduleConfigurations: false, extensions: [], submoduleCfg: [], userRemoteConfigs: [[url: 'https://github.com/lullela/zoro.tv_CI_Testing_Lucas_Alfven.git']]])
+                checkout scmGit(branches: [[name: '**']], extensions: [], userRemoteConfigs: [[url: 'https://github.com/lullela/zoro.tv_CI_Testing_Lucas_Alfven.git']])
+                }
             }
-        }
-        stage('Install dependencies') {
-            steps {
-                sh 'pip install -r requirements.txt'
-            }
-        }
-
-        stage('Clone') {
-            steps {
-                git 'https://github.com/lullela/zoro.tv_CI_Testing_Lucas_Alfven.git'  // Clone your repository
-            }
-        }
-
         stage('Test') {
             steps {
-                sh 'python -m unittest main'  // Run your test suite
+                dir('C:/Users/lulle/gitprojekt/zoro.tv_CI_Testing/test_zoro'){ 
+                    bat 'python -m unittest main.StartPage'
+                }
             }
         }
-
-        stage('Notify') {
+        stage('Clean Workspace'){
             steps {
-                echo 'Done'
+                cleanWs()
             }
         }
     }
