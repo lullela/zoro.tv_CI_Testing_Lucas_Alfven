@@ -88,7 +88,22 @@ class HomePage(unittest.TestCase):
         homePage.is_correct_login()
     
     def test_add_to_list(self):
-        pass
+        homePage = page.HomePage(self.driver)
+        homePage.click_home_search_button()
+        homePage.search_text_element = "Blue Lock"
+        homePage.click_home_2_search_button()
+        homePage.click_serie_title()
+        homePage.add_to_list()
+        homePage.go_to_watchlist()
+        search_result_page = page.SearchResultPage(self.driver)
+        search_result_page.is_results_found()
+    
+    def test_remove_from_list(self):
+        homePage = page.HomePage(self.driver)
+        homePage.go_to_watchlist()
+        homePage.remove_from_list()
+        search_result_page = page.SearchResultPage(self.driver)
+        self.assertFalse(search_result_page.is_results_found())
    
     @classmethod
     def tearDownClass(cls):

@@ -37,6 +37,7 @@ class HomePage(BasePage):
 
     login_user_element = LoginUserElement()
     login_password_element = LoginPasswordElement()
+    search_text_element = SearchTextElement()
 
     def is_url_matches(self):
         return "https://zoro.to/home" in self.driver.current_url
@@ -51,6 +52,37 @@ class HomePage(BasePage):
     
     def is_correct_login(self):
         self.driver.find_element(By.XPATH, '//*[@id="user-slot"]/div/div/div[1]/div/img')
+
+    def click_home_search_button(self):
+        element = self.driver.find_element(*HomePageLocators.SEARCH_BUTTON)
+        self.driver.execute_script("arguments[0].click();", element)
+    
+    def click_home_2_search_button(self):
+        element = self.driver.find_element(*HomePageLocators.SECOND_SEARCH_BUTTON)
+        self.driver.execute_script("arguments[0].click();", element)
+    
+    def click_serie_title(self):
+        element = self.driver.find_element(By.XPATH, '//*[@id="main-content"]/section/div[3]/div/div[1]/div[2]/div[2]/h3/a')
+        self.driver.execute_script("arguments[0].click();", element)
+    
+    def add_to_list(self):
+        element = self.driver.find_element(*HomePageLocators.ADD_LIST)
+        self.driver.execute_script("arguments[0].click();", element)
+        element_two = self.driver.find_element(*HomePageLocators.ADD_LIST_PLANNED)
+        self.driver.execute_script("arguments[0].click();", element_two)
+    
+    def go_to_watchlist(self):
+        element = self.driver.find_element(*HomePageLocators.PROFILE_BUTTON)
+        self.driver.execute_script("arguments[0].click();", element)
+        element_two = self.driver.find_element(*HomePageLocators.WATCHLIST_BUTTON)
+        self.driver.execute_script("arguments[0].click();", element_two)
+    
+    def remove_from_list(self):
+        element = self.driver.find_element(*HomePageLocators.EDIT_LIST)
+        self.driver.execute_script("arguments[0].click();", element)
+        element_two = self.driver.find_element(*HomePageLocators.REMOVE_LIST)
+        self.driver.execute_script("arguments[0].click();", element_two)
+
 
 
 
