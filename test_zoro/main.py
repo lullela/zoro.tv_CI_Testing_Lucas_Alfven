@@ -5,14 +5,16 @@ from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 import unittest
 import page
+from selenium.webdriver.chrome.service import Service as ChromeService
+from webdriver_manager.chrome import ChromeDriverManager
 
 
 class StartPage(unittest.TestCase):
 
     @classmethod
     def setUpClass(cls):
-        serv_obj = Service("C:\Drivers\chromedriver_win32\chromedriver.exe")
-        cls.driver = webdriver.Chrome(service=serv_obj)
+        cls.driver = webdriver.Chrome(service=ChromeService(ChromeDriverManager().install()))
+        
         # cls.driver.implicitly_wait(5)
         # cls.driver.maximize_window()
 
@@ -54,8 +56,7 @@ class HomePage(unittest.TestCase):
 
     @classmethod
     def setUpClass(cls):
-        serv_obj = Service("C:\Drivers\chromedriver_win32\chromedriver.exe")
-        cls.driver = webdriver.Chrome(service=serv_obj)
+        cls.driver = webdriver.Chrome(service=ChromeService(ChromeDriverManager().install()))
         cls.driver.get("https://zoro.to/home")
         cls.driver.implicitly_wait(5)
         homePage = page.HomePage(cls.driver)
